@@ -4,7 +4,7 @@ from flask import request
 from flask_login import login_user, logout_user, current_user
 
 # Authentication apis
-# path '/auth/'
+# path '/user/'
 class LoginApi(Resource):
     def post(self):
         data = request.form
@@ -29,6 +29,7 @@ class SignupApi(Resource):
             db.session.commit()
             return {'statusCode': 200, 'message': 'User created successfully'}, 200
 class LogoutApi(Resource):
+
     def post(self):
         if current_user.is_authenticated:
             logout_user()

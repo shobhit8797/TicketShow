@@ -23,8 +23,8 @@ app.app_context().push()
 #routes for the application
 from application import controllers
 
-from application.api import *
+# from application.api import *
 
-apia.add_resource(LoginApi, '/auth/login')
-apia.add_resource(SignupApi, '/auth/signup')
-apia.add_resource(LogoutApi, '/auth/logout')
+# apia.add_resource(LoginApi, '/user/login')
+# apia.add_resource(SignupApi, '/user/signup')
+# apia.add_resource(LogoutApi, '/user/logout')
