@@ -21,8 +21,11 @@ def login():
         data = request.form
         user = User.query.filter_by(email=data['email']).first()
         if user and user.password_hash == data['password']:
-            login_user(user)
-            return redirect(url_for('index'))
+            if user.role[0].name == 'User':
+                login_user(user)
+                return redirect(url_for('index'))
+            else:
+                return "your are not autherised  to access this page"
         else:
             return redirect(url_for('login'))
 
@@ -37,13 +40,23 @@ def admin_login():
         data = request.form
         user = User.query.filter_by(email=data['email']).first()
         if user and user.password_hash == data['password']:
-            login_user(user)
-
-            # redirect to admin dashboard
-            return redirect(url_for('index'))
+            if user.role[0].name == 'Admin':
+                login_user(user)
+                # redirect to admin dashboard
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return "your are not autherised  to access this page"
+            
         else:
             return redirect(url_for('admin_login'))
 
+
+@app.route('/admin/dashboard', methods=['GET'])
+def admin_dashboard():
+    if current_user.is_authenticated:
+        return render_template('/admin/dashboard.html')
+    else:
+        return redirect(url_for('admin_login'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
